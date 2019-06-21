@@ -1,13 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SendsPasswordResetEmails;
+
+    protected $guard = 'admin';
 
     /**
      * The attributes that are mass assignable.

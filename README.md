@@ -1,3 +1,10 @@
-# 22920. Test Assignment for Laravel _ Frontend 
+# Set up project
 
-https://app.codeline.io/#/projects/2228/tasks/22920
+To set up this project, after cloned this repository please do following these steps in below:
+
+1. Copy `.env.example` to create the `.env` file. Update your variables in `.env` accordingly with your web server.
+2. Directories within the `storage` and the `bootstrap/cache` directories should be writable by your web server.
+3. Open Terminal and run `composer install`
+4. run `php artisan migrate`
+5. run `php artisan db:seed`
+6. run `php artisan passport:install --force`
