@@ -8,3 +8,5 @@ To set up this project, after cloned this repository please do following these s
 4. run `php artisan migrate`
 5. run `php artisan db:seed`
 6. run `php artisan passport:install --force`
+7. `npm install` #Install JS dependencies
+8. `npm run watch` 

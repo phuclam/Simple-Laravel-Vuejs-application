@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helper\Helper;
+use App\Http\Requests\RoomRequest;
 use App\Models\Room;
-use Illuminate\Http\Request;
 
 class RoomController extends BackendController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $records = Room::with(['type', 'capacity'])->get();
@@ -17,67 +15,49 @@ class RoomController extends BackendController
         return $this->responseSuccess($records);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(RoomRequest $request)
     {
-        //
+        $room = new Room();
+        $room->name = $request->input('name');
+        $room->type_id = $request->input('type_id');
+        $room->capacity_id = $request->input('capacity_id');
+        if (!empty($request->input('image'))) {
+            $room->image_url = Helper::uploadImage($request->input('image'));
+        }
+        $room->save();
+
+        return $this->responseSuccess($room);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function show(Room $room)
     {
-        //
+        return $this->responseSuccess($room);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Room $room)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Room $room)
+    public function update(RoomRequest $request, Room $room)
     {
-        //
+
+        $room->name = $request->input('name');
+        $room->type_id = $request->input('type_id');
+        $room->capacity_id = $request->input('capacity_id');
+        if (!empty($request->input('image'))) {
+            $room->image_url = Helper::uploadImage($request->input('image'));
+        }
+        $room->save();
+
+        return $this->responseSuccess($room);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Room  $room
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Room $room)
     {
         //

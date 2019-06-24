@@ -16,13 +16,10 @@
  * Frontend Route
  * ---------------------------
  */
-Route::get('/', function () {
-    return view('frontend.master');
-});
-
 Route::get('/{any?}', function (){
-    return view('backend.master');
-})->where('any', '^(?!api|admin\/)[\/\w\.-]*');
+    phpinfo();
+    return view('frontend.master');
+})->where('any', '^(?!admin)(?!api)[\/\w]*');
 
 /**
  * ---------------------------
@@ -34,15 +31,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('login', 'Backend\AuthController@login');
     Route::middleware('auth:admin')->group(function () {
         Route::get('logout', 'Backend\AuthController@logout')->name('logout');
-        Route::get('/', function () {
-            return view('backend.master');
+        Route::group(['prefix' => 'api'], function () {
+            Route::resource('rooms', 'Backend\RoomController');
+            Route::resource('room-types', 'Backend\RoomTypeController');
+            Route::resource('room-capacities', 'Backend\RoomCapacityController');
         });
         Route::get('/{any?}', function (){
             return view('backend.master');
-        })->where('any', '^(?!api\/)[\/\w\.-]*');
-
-        Route::group(['prefix' => 'api'], function () {
-            Route::resource('rooms', 'Backend\RoomController');
-        });
+        })->where('any', '^(?!api)[\/\w]*');
     });
 });
