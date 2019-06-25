@@ -2,44 +2,44 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\RoomCapacityRequest;
 use App\Models\RoomCapacity;
-use Illuminate\Http\Request;
 
 class RoomCapacityController extends BackendController
 {
     public function index()
     {
-        $records = RoomCapacity::all();
-        return $this->responseSuccess($records);
+        $capacities = RoomCapacity::all();
+        return $this->responseSuccess($capacities);
     }
 
-    public function create()
+    public function store(RoomCapacityRequest $request)
     {
-        //
+        $capacity = new RoomCapacity();
+        $capacity->name = $request->input('name');
+        $capacity->save();
+
+        return $this->responseSuccess($capacity);
     }
 
-    public function store(Request $request)
+    public function show($id)
     {
-        //
+        $capacity = RoomCapacity::findOrFail($id);
+        return $this->responseSuccess($capacity);
     }
 
-    public function show(RoomCapacity $room)
+    public function update(RoomCapacityRequest $request, $id)
     {
-        return $this->responseSuccess($room);
+        $capacity = RoomCapacity::findOrFail($id);
+        $capacity->name = $request->input('name');
+        $capacity->save();
+
+        return $this->responseSuccess($capacity);
     }
 
-    public function edit(RoomCapacity $room)
+    public function destroy($id)
     {
-        //
-    }
-
-    public function update(Request $request, RoomCapacity $room)
-    {
-        //
-    }
-
-    public function destroy(RoomCapacity $room)
-    {
-        //
+        $capacity = RoomCapacity::findOrFail($id);
+        return $this->responseSuccess($capacity->delete());
     }
 }

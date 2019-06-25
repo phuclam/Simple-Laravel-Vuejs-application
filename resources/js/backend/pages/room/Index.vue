@@ -16,14 +16,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="room in rooms" :key="room.id">
+                <tr v-for="(room, index) in rooms">
                     <td>{{ room.id }}</td>
                     <td>{{ room.name }}</td>
                     <td>{{ room.type ? room.type.name : '' }}</td>
                     <td>{{ room.capacity ? room.capacity.name : ''}}</td>
                     <td>
                         <router-link :to="{name: 'room.edit', params: {id: room.id}}" class="btn btn-sm btn-primary">Edit</router-link>
-                        <button class="btn btn-sm btn-danger">Delete</button>
+                        <button v-on:click="deleteRoom(room.id, index)" class="btn btn-sm btn-danger">Delete</button>
                     </td>
                 </tr>
                 </tbody>
@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-    import RoomService from '../services/Room'
+    import RoomService from './Services'
     export default {
         data() {
             return {
@@ -43,6 +43,18 @@
             RoomService.list().then(data => {
                 this.rooms = data;
             }).catch(error => console.log(error));
+        },
+        methods: {
+            deleteRoom(id, index) {
+                if (confirm('Are you sure you want to delete this room # ' + this.rooms[index].name + '?')) {
+                    RoomService.delete(id).then(data => {
+                        if (data === true) {
+                            this.rooms.splice(index, 1);
+                        }
+                    }).catch(error => console.log(error));
+
+                }
+            }
         }
     }
 </script>

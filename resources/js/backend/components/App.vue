@@ -11,19 +11,19 @@
                             <router-link to="/admin/rooms" class="nav-link">Rooms</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Room Types</a>
+                            <router-link to="/admin/types" class="nav-link">Room Types</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Room Capacities</a>
+                            <router-link to="/admin/capacities" class="nav-link">Room Capacities</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Price List</a>
+                            <router-link to="/admin/prices" class="nav-link">Price List</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Bookings</a>
+                            <router-link to="/admin/bookings" class="nav-link">Bookings</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Customers</a>
+                            <router-link to="/admin/customers" class="nav-link">Customers</router-link>
                         </li>
                     </ul>
                 </div>
@@ -36,23 +36,6 @@
         </div>
     </div>
 </template>
-
-<script>
-    import auth from '../auth'
-
-    export default {
-        data() {
-            return {
-                loggedIn: auth.loggedIn()
-            }
-        },
-        created() {
-            auth.onChange = loggedIn => {
-                this.loggedIn = loggedIn
-            }
-        }
-    }
-</script>
 
 <style>
     .nav-link.router-link-exact-active {

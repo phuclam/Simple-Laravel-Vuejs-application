@@ -2,44 +2,45 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\RoomTypeRequest;
 use App\Models\RoomType;
-use Illuminate\Http\Request;
 
 class RoomTypeController extends BackendController
 {
     public function index()
     {
-        $records = RoomType::all();
-        return $this->responseSuccess($records);
+        $types = RoomType::all();
+        return $this->responseSuccess($types);
     }
 
-    public function create()
+
+    public function store(RoomTypeRequest $request)
     {
-        //
+        $type = new RoomType();
+        $type->name = $request->input('name');
+        $type->save();
+
+        return $this->responseSuccess($type);
     }
 
-    public function store(Request $request)
+    public function show($id)
     {
-        //
-    }
-
-    public function show(RoomType $room)
-    {
+        $room = RoomType::findOrFail($id);
         return $this->responseSuccess($room);
     }
 
-    public function edit(RoomType $room)
+    public function update(RoomTypeRequest $request, $id)
     {
-        //
+        $type = RoomType::findOrFail($id);
+        $type->name = $request->input('name');
+        $type->save();
+
+        return $this->responseSuccess($type);
     }
 
-    public function update(Request $request, RoomType $room)
+    public function destroy($id)
     {
-        //
-    }
-
-    public function destroy(RoomType $room)
-    {
-        //
+        $type = RoomType::findOrFail($id);
+        return $this->responseSuccess($type->delete());
     }
 }

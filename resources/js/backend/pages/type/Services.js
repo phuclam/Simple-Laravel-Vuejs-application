@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
     list() {
-        let uri = API_URL + '/room-capacities';
+        let uri = API_URL + '/room-types';
         return axios.get(uri).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;
@@ -10,7 +10,7 @@ export default {
         });
     },
     detail(id) {
-        let uri = API_URL + '/room-capacities/' + id;
+        let uri = API_URL + '/room-types/' + id;
         return axios.get(uri).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;
@@ -18,15 +18,15 @@ export default {
         });
     },
     create(dataObj) {
-        let uri = API_URL + '/room-capacities/';
+        let uri = API_URL + '/room-types/';
         return axios.post(uri, dataObj).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;
             }
         });
     },
-    update(dataObj) {
-        let uri = API_URL + '/room-capacities/';
+    update(id, dataObj) {
+        let uri = API_URL + '/room-types/' + id;
         return axios.put(uri, dataObj).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;
@@ -34,7 +34,7 @@ export default {
         });
     },
     delete(id) {
-        let uri = API_URL + '/room-capacities/' + id;
+        let uri = API_URL + '/room-types/' + id;
         return axios.delete(uri).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;

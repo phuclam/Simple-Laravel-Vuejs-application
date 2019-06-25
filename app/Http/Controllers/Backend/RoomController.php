@@ -10,14 +10,9 @@ class RoomController extends BackendController
 {
     public function index()
     {
-        $records = Room::with(['type', 'capacity'])->get();
+        $rooms = Room::with(['type', 'capacity'])->get();
 
-        return $this->responseSuccess($records);
-    }
-
-    public function create()
-    {
-        //
+        return $this->responseSuccess($rooms);
     }
 
     public function store(RoomRequest $request)
@@ -34,19 +29,15 @@ class RoomController extends BackendController
         return $this->responseSuccess($room);
     }
 
-    public function show(Room $room)
+    public function show($id)
     {
+        $room = Room::findOrFail($id);
         return $this->responseSuccess($room);
     }
 
-    public function edit(Room $room)
+    public function update(RoomRequest $request, $id)
     {
-        //
-    }
-
-    public function update(RoomRequest $request, Room $room)
-    {
-
+        $room = Room::findOrFail($id);
         $room->name = $request->input('name');
         $room->type_id = $request->input('type_id');
         $room->capacity_id = $request->input('capacity_id');
@@ -58,8 +49,9 @@ class RoomController extends BackendController
         return $this->responseSuccess($room);
     }
 
-    public function destroy(Room $room)
+    public function destroy($id)
     {
-        //
+        $room = Room::findOrFail($id);
+        return $this->responseSuccess($room->delete());
     }
 }

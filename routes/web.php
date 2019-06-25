@@ -17,7 +17,6 @@
  * ---------------------------
  */
 Route::get('/{any?}', function (){
-    phpinfo();
     return view('frontend.master');
 })->where('any', '^(?!admin)(?!api)[\/\w]*');
 
