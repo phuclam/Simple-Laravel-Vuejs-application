@@ -29,6 +29,7 @@
 </template>
 <script>
     import CapacityService from './Services'
+
     export default {
         data() {
             return {
