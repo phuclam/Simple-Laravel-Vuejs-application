@@ -13,11 +13,11 @@
     export default {
         props: {
             capacity: {
-                capacity: Object,
+                type: Object,
                 required: true
             },
             errors: {
-                capacity: Object,
+                type: Object,
                 required: true
             }
         }

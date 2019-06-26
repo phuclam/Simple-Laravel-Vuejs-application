@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export default {
-    list() {
+    list(params) {
         let uri = API_URL + '/bookings';
-        return axios.get(uri).then(response => {
+        return axios.get(uri, {params: params}).then(response => {
             if (typeof response.data.data !== 'undefined') {
                 return response.data.data;
             }

@@ -1688,6 +1688,87 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _pages_booking_Services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pages/booking/Services */ "./resources/js/backend/pages/booking/Services.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    booking: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      deleted: false
+    };
+  },
+  methods: {
+    deleteBooking: function deleteBooking(id) {
+      var _this = this;
+
+      if (confirm('Are you sure you want to delete this booking # ' + this.booking.id + '?')) {
+        _pages_booking_Services__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"](id).then(function (data) {
+          if (data === true) {
+            _this.deleted = true;
+          }
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/pages/booking/Add.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/backend/pages/booking/Add.vue?vue&type=script&lang=js& ***!
@@ -1698,7 +1779,9 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Services */ "./resources/js/backend/pages/booking/Services.js");
-/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form */ "./resources/js/backend/pages/booking/Form.vue");
+/* harmony import */ var _customer_Services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../customer/Services */ "./resources/js/backend/pages/customer/Services.js");
+/* harmony import */ var _room_Services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../room/Services */ "./resources/js/backend/pages/room/Services.js");
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Form */ "./resources/js/backend/pages/booking/Form.vue");
 //
 //
 //
@@ -1713,36 +1796,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    CapacityForm: _Form__WEBPACK_IMPORTED_MODULE_1__["default"]
+    BookingForm: _Form__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      capacity: {},
+      booking: {},
+      users: [],
+      rooms: [],
       updated: false,
       errors: {}
     };
   },
+  created: function created() {
+    var _this = this;
+
+    _customer_Services__WEBPACK_IMPORTED_MODULE_1__["default"].list().then(function (data) {
+      _this.users = data;
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+    _room_Services__WEBPACK_IMPORTED_MODULE_2__["default"].list().then(function (data) {
+      _this.rooms = data;
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  },
   methods: {
     onSubmit: function onSubmit() {
-      var _this = this;
+      var _this2 = this;
 
-      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.capacity).then(function (data) {
-        _this.capacity = data;
-        _this.updated = true;
-        _this.errors = {};
+      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.booking).then(function (data) {
+        _this2.booking = data;
+        _this2.updated = true;
+        _this2.errors = {};
 
-        _this.$router.push({
-          name: 'capacity.edit',
+        _this2.$router.push({
+          name: 'booking.edit',
           params: {
-            id: _this.capacity.id
+            id: _this2.booking.id
           }
         });
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     }
   }
@@ -1779,11 +1880,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    CapacityForm: _Form__WEBPACK_IMPORTED_MODULE_1__["default"]
+    BookingForm: _Form__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      capacity: {},
+      booking: {},
+      users: [],
+      rooms: [],
       updated: false,
       errors: {}
     };
@@ -1792,7 +1895,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     _Services__WEBPACK_IMPORTED_MODULE_0__["default"].detail(this.$route.params.id).then(function (data) {
-      _this.capacity = data;
+      _this.booking = data.booking;
+      _this.users = data.users;
+      _this.rooms = data.rooms;
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -1801,8 +1906,8 @@ __webpack_require__.r(__webpack_exports__);
     onSubmit: function onSubmit() {
       var _this2 = this;
 
-      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.$route.params.id, this.capacity).then(function (data) {
-        _this2.capacity = data;
+      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].update(this.$route.params.id, this.booking).then(function (data) {
+        _this2.booking = data;
         _this2.updated = true;
         _this2.errors = {};
       })["catch"](function (error) {
@@ -1823,6 +1928,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 //
 //
 //
@@ -1834,15 +1940,105 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
-    capacity: {
-      capacity: Object,
+    booking: {
+      type: Object,
+      required: true
+    },
+    users: {
+      type: Array,
+      required: true
+    },
+    rooms: {
+      type: Array,
       required: true
     },
     errors: {
-      capacity: Object,
+      type: Object,
       required: true
+    }
+  },
+  computed: {
+    date_start: function date_start() {
+      return this.booking.date_start;
+    },
+    date_end: function date_end() {
+      return this.booking.date_end;
+    },
+    min_start: function min_start() {
+      return new Date();
+    },
+    min_end: function min_end() {
+      var day = typeof this.booking.date_start !== 'undefined' ? new Date(this.booking.date_start) : new Date();
+      var nextDay = new Date(day);
+      nextDay.setDate(day.getDate() + 1);
+      return nextDay;
+    }
+  },
+  methods: {
+    calculateNights: function calculateNights() {
+      if (typeof this.booking.date_start !== 'undefined' && typeof this.booking.date_end !== 'undefined') {
+        var start = new Date(this.booking.date_start);
+        var end = new Date(this.booking.date_end);
+        this.booking.nights = Math.round((end - start) / (60 * 60 * 24 * 1000));
+        this.booking.nights = this.booking.nights < 0 ? 0 : this.booking.nights;
+      }
+    }
+  },
+  watch: {
+    date_start: function date_start() {
+      this.calculateNights();
+    },
+    date_end: function date_end() {
+      this.calculateNights();
     }
   }
 });
@@ -1860,6 +2056,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Services */ "./resources/js/backend/pages/booking/Services.js");
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var _components_BookingDetail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/BookingDetail */ "./resources/js/backend/components/BookingDetail.vue");
 //
 //
 //
@@ -1871,10 +2068,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
+    BookingDetail: _components_BookingDetail__WEBPACK_IMPORTED_MODULE_2__["default"],
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
@@ -1883,18 +2091,24 @@ __webpack_require__.r(__webpack_exports__);
       date: null,
       highlighted: {
         dates: []
-      }
+      },
+      selected: false
     };
   },
   created: function created() {
     var _this = this;
 
     _Services__WEBPACK_IMPORTED_MODULE_0__["default"].list().then(function (data) {
-      _this.bookings = data;
+      _this.bookings = data.bookings;
+
+      if (data.reserved.length > 0) {
+        data.reserved.forEach(function (v) {
+          _this.highlighted.dates.push(new Date(v));
+        });
+      }
     })["catch"](function (error) {
       return console.log(error);
     });
-    this.highlighted.dates.push(new Date('2019-06-22'));
   },
   methods: {
     deleteBooking: function deleteBooking(id, index) {
@@ -1910,8 +2124,36 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    changeMonth: function changeMonth() {
-      console.log(this.date);
+    refreshBookings: function refreshBookings() {
+      var _this3 = this;
+
+      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].list().then(function (data) {
+        _this3.bookings = data.bookings;
+        _this3.highlighted.dates = [];
+
+        if (data.reserved.length > 0) {
+          data.reserved.forEach(function (v) {
+            _this3.highlighted.dates.push(new Date(v));
+          });
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+      this.selected = false;
+    }
+  },
+  watch: {
+    date: function date() {
+      var _this4 = this;
+
+      _Services__WEBPACK_IMPORTED_MODULE_0__["default"].list({
+        date: this.date
+      }).then(function (data) {
+        _this4.bookings = data.bookings;
+        _this4.selected = true;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     }
   }
 });
@@ -2067,11 +2309,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     capacity: {
-      capacity: Object,
+      type: Object,
       required: true
     },
     errors: {
-      capacity: Object,
+      type: Object,
       required: true
     }
   }
@@ -7484,7 +7726,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.big-datepicker .vdp-datepicker__calendar{\n    width: 100%;\n    border: 0;\n    border-left: 1px solid #CCC;\n    border-top: 1px solid #CCC;\n}\n.big-datepicker .vdp-datepicker__calendar .cell{\n    height: 60px;\n    line-height: 60px;\n    border-right: 1px solid #CCC;\n    border-bottom: 1px solid #CCC;\n}\n.big-datepicker .vdp-datepicker__calendar .cell.day-header{\n    font-size: 100%;\n    border-top: 1px solid #CCC;\n    background: #e6e6e6\n}\n.big-datepicker .vdp-datepicker__calendar header .next{\n    border-right: 1px solid #CCC;\n}\n", ""]);
+exports.push([module.i, "\n.big-datepicker .vdp-datepicker__calendar {\n    width: 100%;\n    border: 0;\n    border-left: 1px solid #CCC;\n    border-top: 1px solid #CCC;\n}\n.big-datepicker .vdp-datepicker__calendar .cell {\n    height: 60px;\n    line-height: 60px;\n    border-right: 1px solid #CCC;\n    border-bottom: 1px solid #CCC;\n}\n.big-datepicker .vdp-datepicker__calendar .cell.day-header {\n    font-size: 100%;\n    border-top: 1px solid #CCC;\n    background: #e6e6e6\n}\n.big-datepicker .vdp-datepicker__calendar header .next {\n    border-right: 1px solid #CCC;\n}\n", ""]);
 
 // exports
 
@@ -39233,6 +39475,145 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.deleted
+      ? _c("div", { staticClass: "alert alert-success" }, [
+          _vm._v(
+            "The booking #" +
+              _vm._s(_vm.booking.id) +
+              " has been deleted successfully."
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.deleted
+      ? _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-bordered" }, [
+            _c("tr", [
+              _c("th", { attrs: { colspan: "4" } }, [
+                _c("div", { staticClass: "d-flex justify-content-between" }, [
+                  _c("div", [
+                    _c("span", { staticClass: "py-1 d-block" }, [
+                      _vm._v("Booking ID: #" + _vm._s(_vm.booking.id))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-sm btn-primary mx-1",
+                          attrs: {
+                            to: {
+                              name: "booking.edit",
+                              params: { id: _vm.booking.id }
+                            }
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-danger mx-1",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteBooking(_vm.booking.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Delete")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("th", { staticClass: "w-25" }, [_vm._v("Room")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(_vm._s(_vm.booking.room.name))
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "w-25" }, [_vm._v("Customer")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(
+                  _vm._s(
+                    _vm.booking.user_id
+                      ? _vm.booking.user.name
+                      : _vm.booking.name
+                  )
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("th", { staticClass: "w-25" }, [_vm._v("Date Start")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(
+                  _vm._s(
+                    _vm._f("moment")(_vm.booking.date_start, "DD MMMM YYYY")
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "w-25" }, [_vm._v("Date End")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(_vm.booking.date_end, "DD MMMM YYYY"))
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("th", { staticClass: "w-25" }, [_vm._v("Night(s)")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(_vm._s(_vm.booking.nights))
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "w-25" }, [_vm._v("Price")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v("$" + _vm._s(_vm.booking.price))
+              ])
+            ])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/pages/404.vue?vue&type=template&id=743689b8&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/backend/pages/404.vue?vue&type=template&id=743689b8& ***!
@@ -39299,8 +39680,13 @@ var render = function() {
         }
       },
       [
-        _c("capacity-form", {
-          attrs: { capacity: _vm.capacity, errors: _vm.errors }
+        _c("booking-form", {
+          attrs: {
+            booking: _vm.booking,
+            rooms: _vm.rooms,
+            users: _vm.users,
+            errors: _vm.errors
+          }
         }),
         _vm._v(" "),
         _vm._m(1)
@@ -39320,7 +39706,7 @@ var staticRenderFns = [
         staticClass:
           "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       },
-      [_c("h1", { staticClass: "h2" }, [_vm._v("New Capacity")])]
+      [_c("h1", { staticClass: "h2" }, [_vm._v("New Booking")])]
     )
   },
   function() {
@@ -39373,8 +39759,13 @@ var render = function() {
         }
       },
       [
-        _c("capacity-form", {
-          attrs: { capacity: _vm.capacity, errors: _vm.errors }
+        _c("booking-form", {
+          attrs: {
+            booking: _vm.booking,
+            rooms: _vm.rooms,
+            users: _vm.users,
+            errors: _vm.errors
+          }
         }),
         _vm._v(" "),
         _vm._m(1)
@@ -39394,7 +39785,7 @@ var staticRenderFns = [
         staticClass:
           "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       },
-      [_c("h1", { staticClass: "h2" }, [_vm._v("Edit Capacity")])]
+      [_c("h1", { staticClass: "h2" }, [_vm._v("Edit Booking")])]
     )
   },
   function() {
@@ -39429,26 +39820,136 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Name")]),
+      _c("label", [_vm._v("Room")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.booking.room_id,
+              expression: "booking.room_id"
+            }
+          ],
+          class: ["form-control", _vm.errors.room_id ? "is-invalid" : ""],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.$set(
+                _vm.booking,
+                "room_id",
+                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+              )
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [_vm._v("Select an Room")]),
+          _vm._v(" "),
+          _vm._l(_vm.rooms, function(room) {
+            return _c("option", { domProps: { value: room.id } }, [
+              _vm._v(_vm._s(room.name))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm.errors.room_id
+        ? _c(
+            "span",
+            { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+            [_c("strong", [_vm._v(_vm._s(_vm.errors.room_id[0]))])]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Customer")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.booking.user_id,
+              expression: "booking.user_id"
+            }
+          ],
+          class: ["form-control", _vm.errors.user_id ? "is-invalid" : ""],
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.$set(
+                _vm.booking,
+                "user_id",
+                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+              )
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [
+            _vm._v("Select an Customer")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.users, function(user) {
+            return _c("option", { domProps: { value: user.id } }, [
+              _vm._v(_vm._s(user.name))
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm.errors.user_id
+        ? _c(
+            "span",
+            { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+            [_c("strong", [_vm._v(_vm._s(_vm.errors.room_id[0]))])]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("or Customer Name")]),
       _vm._v(" "),
       _c("input", {
         directives: [
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.capacity.name,
-            expression: "capacity.name"
+            value: _vm.booking.name,
+            expression: "booking.name"
           }
         ],
         class: ["form-control", _vm.errors.name ? "is-invalid" : ""],
         attrs: { type: "text" },
-        domProps: { value: _vm.capacity.name },
+        domProps: { value: _vm.booking.name },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.capacity, "name", $event.target.value)
+            _vm.$set(_vm.booking, "name", $event.target.value)
           }
         }
       }),
@@ -39458,6 +39959,112 @@ var render = function() {
             "span",
             { staticClass: "invalid-feedback", attrs: { role: "alert" } },
             [_c("strong", [_vm._v(_vm._s(_vm.errors.name[0]))])]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", [_vm._v("Date Start")]),
+        _vm._v(" "),
+        _c("datepicker", {
+          attrs: {
+            "disabled-dates": { to: _vm.min_start },
+            "use-utc": true,
+            "input-class": [
+              "form-control",
+              _vm.errors.date_start ? "is-invalid" : ""
+            ],
+            placeholder: "Select Date"
+          },
+          model: {
+            value: _vm.booking.date_start,
+            callback: function($$v) {
+              _vm.$set(_vm.booking, "date_start", $$v)
+            },
+            expression: "booking.date_start"
+          }
+        }),
+        _vm._v(" "),
+        _vm.errors.date_start
+          ? _c(
+              "span",
+              { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+              [_c("strong", [_vm._v(_vm._s(_vm.errors.date_start[0]))])]
+            )
+          : _vm._e()
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("label", [_vm._v("Date End")]),
+        _vm._v(" "),
+        _c("datepicker", {
+          attrs: {
+            "disabled-dates": { to: _vm.min_end },
+            "use-utc": true,
+            "input-class": [
+              "form-control",
+              _vm.errors.date_end ? "is-invalid" : ""
+            ],
+            placeholder: "Select Date"
+          },
+          model: {
+            value: _vm.booking.date_end,
+            callback: function($$v) {
+              _vm.$set(_vm.booking, "date_end", $$v)
+            },
+            expression: "booking.date_end"
+          }
+        }),
+        _vm._v(" "),
+        _vm.errors.date_end
+          ? _c(
+              "span",
+              { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+              [_c("strong", [_vm._v(_vm._s(_vm.errors.date_end[0]))])]
+            )
+          : _vm._e()
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Nights")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.booking.nights,
+            expression: "booking.nights"
+          }
+        ],
+        class: ["form-control", _vm.errors.nights ? "is-invalid" : ""],
+        attrs: { type: "number" },
+        domProps: { value: _vm.booking.nights },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.booking, "nights", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm.errors.nights
+        ? _c(
+            "span",
+            { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+            [_c("strong", [_vm._v(_vm._s(_vm.errors.nights[0]))])]
           )
         : _vm._e()
     ])
@@ -39507,27 +40114,80 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "big-datepicker" },
-      [
-        _c("datepicker", {
-          attrs: { highlighted: _vm.highlighted, inline: true },
-          on: { changedMonth: _vm.changeMonth },
-          model: {
-            value: _vm.date,
-            callback: function($$v) {
-              _vm.date = $$v
-            },
-            expression: "date"
-          }
-        })
-      ],
-      1
-    )
+    !_vm.selected
+      ? _c(
+          "div",
+          { staticClass: "big-datepicker" },
+          [
+            _c("datepicker", {
+              attrs: {
+                "use-utc": true,
+                highlighted: _vm.highlighted,
+                inline: true
+              },
+              model: {
+                value: _vm.date,
+                callback: function($$v) {
+                  _vm.date = $$v
+                },
+                expression: "date"
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.selected
+      ? _c(
+          "div",
+          [
+            _c(
+              "a",
+              {
+                staticClass: "my-3 btn btn-sm btn-info",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.refreshBookings()
+                  }
+                }
+              },
+              [_vm._v("Back to calendar")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.bookings, function(booking) {
+              return _c("booking-detail", {
+                key: booking.id,
+                attrs: { booking: booking }
+              })
+            }),
+            _vm._v(" "),
+            _vm.bookings.length === 0
+              ? _c("p", [_vm._v("There is any booking on this date yet.")])
+              : _vm._e()
+          ],
+          2
+        )
+      : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "my-3" }, [
+      _c("i", [
+        _vm._v(
+          "** The highlighted dates is the dates have been reserved. Click on a date to see the bookings."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -63395,6 +64055,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/backend/components/BookingDetail.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/backend/components/BookingDetail.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true& */ "./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true&");
+/* harmony import */ var _BookingDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BookingDetail.vue?vue&type=script&lang=js& */ "./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BookingDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6cb14c4a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/backend/components/BookingDetail.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookingDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BookingDetail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/components/BookingDetail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BookingDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/backend/components/BookingDetail.vue?vue&type=template&id=6cb14c4a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BookingDetail_vue_vue_type_template_id_6cb14c4a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/backend/pages/404.vue":
 /*!********************************************!*\
   !*** ./resources/js/backend/pages/404.vue ***!
@@ -63755,9 +64484,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  list: function list() {
+  list: function list(params) {
     var uri = API_URL + '/bookings';
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (response) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri, {
+      params: params
+    }).then(function (response) {
       if (typeof response.data.data !== 'undefined') {
         return response.data.data;
       }
@@ -64317,15 +65048,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./resources/js/backend/pages/hotel/Edit.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Edit_vue_vue_type_template_id_77bf77e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=77bf77e9& */ "./resources/js/backend/pages/hotel/Edit.vue?vue&type=template&id=77bf77e9&");
 /* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/backend/pages/hotel/Edit.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -64355,7 +65085,7 @@ component.options.__file = "resources/js/backend/pages/hotel/Edit.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/backend/pages/hotel/Edit.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65199,11 +65929,11 @@ var routes = [{
 }, {
   path: ADMIN_PATH + '/booking/:id/edit',
   name: 'booking.edit',
-  component: _pages_booking_Add__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _pages_booking_Edit__WEBPACK_IMPORTED_MODULE_16__["default"]
 }, {
   path: ADMIN_PATH + '/booking/add',
   name: 'booking.add',
-  component: _pages_booking_Edit__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _pages_booking_Add__WEBPACK_IMPORTED_MODULE_15__["default"]
 }, {
   path: '*',
   component: _pages_404__WEBPACK_IMPORTED_MODULE_1__["default"]

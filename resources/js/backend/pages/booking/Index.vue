@@ -4,33 +4,46 @@
             <h1 class="h2">Bookings</h1>
             <router-link :to="{name: 'booking.add'}" class="btn btn-sm btn-primary">Add New</router-link>
         </div>
-        <div class="big-datepicker">
-            <datepicker :highlighted="highlighted" v-model="date" :inline="true" @changedMonth="changeMonth"></datepicker>
+        <div class="big-datepicker" v-if="!selected">
+            <datepicker :use-utc="true" :highlighted="highlighted" v-model="date" :inline="true"></datepicker>
+            <div class="my-3">
+                <i>** The highlighted dates is the dates have been reserved. Click on a date to see the bookings.</i>
+            </div>
         </div>
+        <div v-if="selected">
+            <a href="#" v-on:click="refreshBookings()" class="my-3 btn btn-sm btn-info">Back to calendar</a>
+            <booking-detail :booking="booking" v-for="booking in bookings" :key="booking.id"></booking-detail>
+            <p v-if="bookings.length === 0">There is any booking on this date yet.</p>
+        </div>
+
     </div>
 </template>
 <script>
     import BookingService from './Services'
     import Datepicker from 'vuejs-datepicker';
+    import BookingDetail from "../../components/BookingDetail";
 
     export default {
-        components: {Datepicker},
+        components: {BookingDetail, Datepicker},
         data() {
             return {
                 bookings: [],
                 date: null,
                 highlighted: {
                     dates: [],
-                }
+                },
+                selected: false
             }
         },
         created() {
             BookingService.list().then(data => {
-                this.bookings = data;
+                this.bookings = data.bookings;
+                if (data.reserved.length > 0) {
+                    data.reserved.forEach((v) => {
+                        this.highlighted.dates.push(new Date(v));
+                    })
+                }
             }).catch(error => console.log(error));
-
-
-            this.highlighted.dates.push(new Date('2019-06-22'))
         },
         methods: {
             deleteBooking(id, index) {
@@ -43,31 +56,52 @@
 
                 }
             },
-            changeMonth() {
-                console.log(this.date)
+            refreshBookings() {
+                BookingService.list().then(data => {
+                    this.bookings = data.bookings;
+                    this.highlighted.dates = [];
+                    if (data.reserved.length > 0) {
+                        data.reserved.forEach((v) => {
+                            this.highlighted.dates.push(new Date(v));
+                        })
+                    }
+                }).catch(error => console.log(error));
+
+                this.selected = false;
+            }
+        },
+        watch: {
+            date: function () {
+                BookingService.list({date: this.date}).then(data => {
+                    this.bookings = data.bookings;
+                    this.selected = true;
+                }).catch(error => console.log(error));
             }
         }
     }
 </script>
 <style>
-    .big-datepicker .vdp-datepicker__calendar{
+    .big-datepicker .vdp-datepicker__calendar {
         width: 100%;
         border: 0;
         border-left: 1px solid #CCC;
         border-top: 1px solid #CCC;
     }
-    .big-datepicker .vdp-datepicker__calendar .cell{
+
+    .big-datepicker .vdp-datepicker__calendar .cell {
         height: 60px;
         line-height: 60px;
         border-right: 1px solid #CCC;
         border-bottom: 1px solid #CCC;
     }
-    .big-datepicker .vdp-datepicker__calendar .cell.day-header{
+
+    .big-datepicker .vdp-datepicker__calendar .cell.day-header {
         font-size: 100%;
         border-top: 1px solid #CCC;
         background: #e6e6e6
     }
-    .big-datepicker .vdp-datepicker__calendar header .next{
+
+    .big-datepicker .vdp-datepicker__calendar header .next {
         border-right: 1px solid #CCC;
     }
 </style>

@@ -24,9 +24,10 @@ class BookingRequest extends FormRequest
     public function rules()
     {
         return [
+            'room_id' => 'required',
             'nights' => 'required',
-            'date_start' => 'date',
-            'date_end' => 'date',
+            'date_start' => 'required|date',
+            'date_end' => 'required|date|after:date_start',
         ];
     }
 }

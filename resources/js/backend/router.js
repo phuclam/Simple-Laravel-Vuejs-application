@@ -34,8 +34,8 @@ const routes = [
     {path: ADMIN_PATH + '/capacity/add', name: 'capacity.add', component: CapacityAdd},
     {path: ADMIN_PATH + '/customers', name: 'customers', component: Customer},
     {path: ADMIN_PATH + '/bookings', name: 'bookings', component: Bookings},
-    {path: ADMIN_PATH + '/booking/:id/edit', name: 'booking.edit', component: BookingAdd},
-    {path: ADMIN_PATH + '/booking/add', name: 'booking.add', component: BookingEdit},
+    {path: ADMIN_PATH + '/booking/:id/edit', name: 'booking.edit', component: BookingEdit},
+    {path: ADMIN_PATH + '/booking/add', name: 'booking.add', component: BookingAdd},
     {path: '*', component: NotFound}
 ];
 

@@ -17,10 +17,4 @@ class Booking extends Model
     {
         return $this->belongsTo('App\Models\Room', 'room_id');
     }
-
-
-    public function getRangeAttribute()
-    {
-        return 'asdfadsf';
-    }
 }
