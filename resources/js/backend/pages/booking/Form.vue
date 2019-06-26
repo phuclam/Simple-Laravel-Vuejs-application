@@ -17,7 +17,7 @@
                 <option v-for="user in users" :value="user.id">{{user.name}}</option>
             </select>
             <span v-if="errors.user_id" class="invalid-feedback" role="alert">
-                <strong>{{ errors.room_id[0] }}</strong>
+                <strong>{{ errors.user_id[0] }}</strong>
             </span>
         </div>
         <div class="form-group">
@@ -45,10 +45,14 @@
         </div>
         <div class="form-group">
             <label>Nights</label>
-            <input type="number" :class="['form-control', errors.nights ? 'is-invalid' : '']" v-model="booking.nights">
+            <input type="number" readonly :class="['form-control', errors.nights ? 'is-invalid' : '']" v-model="booking.nights">
             <span v-if="errors.nights" class="invalid-feedback" role="alert">
                 <strong>{{ errors.nights[0] }}</strong>
             </span>
+        </div>
+        <div class="form-group" v-if="booking.id">
+            <label>Price</label>
+            <input type="number" class="form-control" :value="booking.price" readonly>
         </div>
     </div>
 </template>

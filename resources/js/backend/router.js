@@ -16,6 +16,9 @@ import Customer from './pages/customer/Index'
 import Bookings from './pages/booking/Index'
 import BookingAdd from './pages/booking/Add'
 import BookingEdit from './pages/booking/Edit'
+import Prices from './pages/price/Index'
+import PriceAdd from './pages/price/Add'
+import PriceEdit from './pages/price/Edit'
 
 
 
@@ -36,6 +39,9 @@ const routes = [
     {path: ADMIN_PATH + '/bookings', name: 'bookings', component: Bookings},
     {path: ADMIN_PATH + '/booking/:id/edit', name: 'booking.edit', component: BookingEdit},
     {path: ADMIN_PATH + '/booking/add', name: 'booking.add', component: BookingAdd},
+    {path: ADMIN_PATH + '/prices', name: 'prices', component: Prices},
+    {path: ADMIN_PATH + '/price/:id/edit', name: 'price.edit', component: PriceEdit},
+    {path: ADMIN_PATH + '/price/add', name: 'price.add', component: PriceAdd},
     {path: '*', component: NotFound}
 ];
 

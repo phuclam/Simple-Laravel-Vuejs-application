@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
+use App\Models\Price;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,7 +48,35 @@ class BookingController extends BackendController
         $booking->date_start = date('Y-m-d', strtotime($request->input('date_start')));
         $booking->date_end = date('Y-m-d', strtotime($request->input('date_end')));
         $booking->nights = $request->input('nights');
-        $booking->price = 0;
+
+        $room = Room::findOrFail($request->input('room_id'));
+        $prices = Price::where('type_id', $room->type_id)
+                        ->where('capacity_id', $room->capacity_id)
+                        ->get()->toArray();
+        if (empty($prices)) {
+            return $this->responseError('Type and Capacity of this Room have not defined price.');
+        }
+
+        $dayTypePrices = [];
+        foreach ($prices as $price) {
+            $dayTypePrices[$price['day_type']] = $price['price'];
+        }
+
+        $date = $booking->date_start;
+        $price = 0;
+        while($date < $booking->date_end) {
+            $dayOfWeek = date('D', strtotime($date));
+
+            if (in_array($dayOfWeek, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'])) {
+                $price += isset($dayTypePrices['Weekday']) ? $dayTypePrices['Weekday'] : (isset($dayTypePrices['Weekend']) ? $dayTypePrices['Weekend'] : 0);
+            } elseif (in_array($dayOfWeek, ['Sat', 'Sun'])) {
+                $price += isset($dayTypePrices['Weekend']) ? $dayTypePrices['Weekend'] : (isset($dayTypePrices['Weekday']) ? $dayTypePrices['Weekday'] : 0);
+            }
+
+            $date = date('Y-m-d', strtotime($date . '+1 day'));
+        }
+
+        $booking->price = $price;
         $booking->save();
 
         return $this->responseSuccess($booking);

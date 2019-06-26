@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('room-types', 'Backend\RoomTypeController');
             Route::resource('room-capacities', 'Backend\RoomCapacityController');
             Route::resource('bookings', 'Backend\BookingController');
+            Route::resource('prices', 'Backend\PriceController');
             Route::get('hotel', 'Backend\HotelController@show');
             Route::put('hotel', 'Backend\HotelController@update');
             Route::get('users', 'Backend\UserController@index');

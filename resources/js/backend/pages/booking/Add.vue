@@ -4,6 +4,7 @@
             <h1 class="h2">New Booking</h1>
         </div>
         <div v-if="updated" class="alert alert-success">Updated successfully.</div>
+        <div v-if="undefinedPrice" class="alert alert-danger">{{ undefinedPrice }}</div>
         <form @submit.prevent="onSubmit">
             <booking-form :booking="booking" :rooms="rooms" :users="users" :errors="errors" />
             <div class="text-center">
@@ -26,7 +27,8 @@
                 users: [],
                 rooms: [],
                 updated: false,
-                errors: {}
+                errors: {},
+                undefinedPrice: null
             }
         },
         created() {
@@ -45,7 +47,13 @@
                     this.errors = {};
                     this.$router.push({name: 'booking.edit', params: {id: this.booking.id}});
                 }).catch(error => {
-                    this.errors = error.response.data.errors
+                    if (typeof error.response.data.errors !== 'undefined') {
+                        this.errors = error.response.data.errors
+                    }
+
+                    if (typeof error.response.data.message !== 'undefined') {
+                        this.undefinedPrice = error.response.data.message;
+                    }
                 });
             }
         }
