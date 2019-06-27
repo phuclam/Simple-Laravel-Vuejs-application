@@ -25,3 +25,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'Frontend\AuthController@logout');
     Route::get('user/profile', 'Frontend\UserController@profile');
 });
+
+Route::get('rooms', 'Backend\RoomController@index');
