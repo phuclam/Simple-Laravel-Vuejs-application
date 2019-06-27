@@ -17,8 +17,8 @@
                 <tr v-for="(user) in users">
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
-                    <th>{{ user.email }}</th>
-                    <th>{{ user.created_at | moment("DD MMMM YYYY \\a\\t hh:mm A")}}</th>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.created_at | moment("DD MMMM YYYY \\a\\t hh:mm A")}}</td>
                 </tr>
                 </tbody>
             </table>
