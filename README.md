@@ -10,3 +10,13 @@ To set up this project, after cloned this repository please do following these s
 6. run `php artisan passport:install --force`
 7. `npm install` #Install JS dependencies
 8. `npm run watch` 
+
+#Admin Dashboard
+`<BASE_URL>/admin`
+
+#Default Credentials
+1. Admin account: 
+    
+    `admin@admin.com` / `secret`
+        
+    

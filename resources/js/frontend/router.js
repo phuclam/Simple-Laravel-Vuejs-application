@@ -4,8 +4,8 @@ import VueRouter from 'vue-router'
 import auth from './auth'
 import NotFound from './pages/404.vue'
 import Home from './pages/Home.vue'
-import About from './pages/About.vue'
-import Dashboard from './pages/Dashboard.vue'
+import SignUp from './pages/SignUp'
+import Profile from './pages/Profile'
 import Login from './pages/Login.vue'
 
 function requireAuth(to, from, next) {
@@ -20,9 +20,9 @@ function requireAuth(to, from, next) {
 }
 
 const routes = [
-    {path: '/', component: Home},
-    {path: '/about', component: About},
-    {path: '/dashboard', component: Dashboard, beforeEnter: requireAuth},
+    {path: '/', name: 'home', component: Home},
+    {path: '/register', name: 'register', component: SignUp},
+    {path: '/profile', name: 'profile', component: Profile, beforeEnter: requireAuth},
     {path: '/login', component: Login},
     {
         path: '/logout',

@@ -1,4 +1,5 @@
 require('./bootstrap');
+window.API_URL = '/api';
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'

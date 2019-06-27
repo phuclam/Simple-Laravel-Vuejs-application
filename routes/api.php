@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
  * Frontend Route
  * ---------------------------
  */
-Route::group(['prefix' => 'frontend'], function () {
-    Route::post('login', 'Frontend\AuthController@login');
-    Route::middleware('auth:api')->group(function () {
-        Route::get('logout', 'Frontend\AuthController@logout');
-        Route::get('user/profile', 'Frontend\UserController@profile');
-    });
+
+Route::post('login', 'Frontend\AuthController@login');
+Route::post('register', 'Frontend\UserController@register');
+Route::middleware('auth:api')->group(function () {
+    Route::get('logout', 'Frontend\AuthController@logout');
+    Route::get('user/profile', 'Frontend\UserController@profile');
 });
