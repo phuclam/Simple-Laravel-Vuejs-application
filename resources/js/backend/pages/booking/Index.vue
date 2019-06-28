@@ -14,13 +14,14 @@
                 <i>** The highlighted dates is the dates have been reserved. Click on a date to see the bookings.</i>
             </div>
         </div>
-        <div class="table-responsive" v-if="mode === 'list'">
+        <div class="table-responsive" v-if="!selected && mode === 'list'">
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Room</th>
                     <th>Customer</th>
+                    <th>Phone</th>
                     <th>Date Start</th>
                     <th>Date End</th>
                     <th class="text-center">Nights</th>
@@ -33,6 +34,7 @@
                     <td>{{ booking.id }}</td>
                     <td>{{ booking.room.name }}</td>
                     <td>{{ booking.user ? booking.user.name : booking.name}}</td>
+                    <td>{{ booking.phone }}</td>
                     <td>{{ booking.date_start | moment("DD MMMM YYYY")}}</td>
                     <td>{{ booking.date_end | moment("DD MMMM YYYY")}}</td>
                     <td class="text-center">{{ booking.nights}}</td>
@@ -106,6 +108,7 @@
                 this.selected = false;
             },
             selectMode(m) {
+                this.refreshBookings();
                 this.mode = m;
                 $cookies.set('booking-view', m);
             }

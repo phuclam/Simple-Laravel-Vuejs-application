@@ -17,8 +17,14 @@
                 <tr>
                     <th class="w-25">Room</th>
                     <td class="w-25">{{ booking.room.name }}</td>
+                    <td class="w-25"></td>
+                    <td class="w-25"></td>
+                </tr>
+                <tr>
                     <th class="w-25">Customer</th>
-                    <td class="w-25">{{ booking.user_id ? booking.user.name : booking.name}}</td>
+                    <td class="w-25">{{ booking.user_id ? booking.user.name : booking.name }}</td>
+                    <th class="w-25">Phone</th>
+                    <td class="w-25">{{ booking.phone  }}</td>
                 </tr>
                 <tr>
                     <th class="w-25">Date Start</th>

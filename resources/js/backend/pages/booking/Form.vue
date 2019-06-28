@@ -28,6 +28,13 @@
             </span>
         </div>
         <div class="form-group">
+            <label>Phone</label>
+            <input type="text" :class="['form-control', errors.phone ? 'is-invalid' : '']" v-model="booking.phone">
+            <span v-if="errors.phone" class="invalid-feedback" role="alert">
+                <strong>{{ errors.phone[0] }}</strong>
+            </span>
+        </div>
+        <div class="form-group">
             <label>Date Start</label>
             <datepicker :disabled-dates="{to: min_start}" :use-utc="true" :input-class="['form-control', errors.date_start ? 'is-invalid' : '']" v-model="booking.date_start"
                         placeholder="Select Date"></datepicker>

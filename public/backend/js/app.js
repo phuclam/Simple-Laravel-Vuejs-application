@@ -1737,6 +1737,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -1995,6 +2001,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2124,6 +2137,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2190,6 +2205,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = false;
     },
     selectMode: function selectMode(m) {
+      this.refreshBookings();
       this.mode = m;
       $cookies.set('booking-view', m);
     }
@@ -40036,6 +40052,12 @@ var render = function() {
                 _vm._v(_vm._s(_vm.booking.room.name))
               ]),
               _vm._v(" "),
+              _c("td", { staticClass: "w-25" }),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" })
+            ]),
+            _vm._v(" "),
+            _c("tr", [
               _c("th", { staticClass: "w-25" }, [_vm._v("Customer")]),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
@@ -40046,6 +40068,12 @@ var render = function() {
                       : _vm.booking.name
                   )
                 )
+              ]),
+              _vm._v(" "),
+              _c("th", { staticClass: "w-25" }, [_vm._v("Phone")]),
+              _vm._v(" "),
+              _c("td", { staticClass: "w-25" }, [
+                _vm._v(_vm._s(_vm.booking.phone))
               ])
             ]),
             _vm._v(" "),
@@ -40449,6 +40477,40 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Phone")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.booking.phone,
+            expression: "booking.phone"
+          }
+        ],
+        class: ["form-control", _vm.errors.phone ? "is-invalid" : ""],
+        attrs: { type: "text" },
+        domProps: { value: _vm.booking.phone },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.booking, "phone", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm.errors.phone
+        ? _c(
+            "span",
+            { staticClass: "invalid-feedback", attrs: { role: "alert" } },
+            [_c("strong", [_vm._v(_vm._s(_vm.errors.phone[0]))])]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "form-group" },
@@ -40678,7 +40740,7 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.mode === "list"
+    !_vm.selected && _vm.mode === "list"
       ? _c("div", { staticClass: "table-responsive" }, [
           _c("table", { staticClass: "table table-bordered table-striped" }, [
             _vm._m(1),
@@ -40696,6 +40758,8 @@ var render = function() {
                       _vm._s(booking.user ? booking.user.name : booking.name)
                     )
                   ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(booking.phone))]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
@@ -40821,6 +40885,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Room")]),
         _vm._v(" "),
         _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Phone")]),
         _vm._v(" "),
         _c("th", [_vm._v("Date Start")]),
         _vm._v(" "),

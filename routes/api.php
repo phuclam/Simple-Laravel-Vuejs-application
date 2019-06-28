@@ -26,4 +26,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/profile', 'Frontend\UserController@profile');
 });
 
-Route::get('rooms', 'Backend\RoomController@index');
+Route::get('rooms', 'Frontend\RoomController@index');
+Route::post('booking', 'Frontend\RoomController@booking');

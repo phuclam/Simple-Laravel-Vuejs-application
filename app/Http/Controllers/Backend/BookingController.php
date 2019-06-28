@@ -45,6 +45,7 @@ class BookingController extends BackendController
         $booking->room_id = $request->input('room_id');
         $booking->user_id = $request->input('user_id');
         $booking->name = $request->input('name');
+        $booking->phone = $request->input('phone');
         $booking->date_start = date('Y-m-d', strtotime($request->input('date_start')));
         $booking->date_end = date('Y-m-d', strtotime($request->input('date_end')));
         $booking->nights = $request->input('nights');
@@ -96,6 +97,7 @@ class BookingController extends BackendController
         $booking->room_id = $request->input('room_id');
         $booking->user_id = $request->input('user_id');
         $booking->name = $request->input('name');
+        $booking->phone = $request->input('phone');
         $booking->date_start = date('Y-m-d', strtotime($request->input('date_start')));
         $booking->date_end = date('Y-m-d', strtotime($request->input('date_end')));
         $booking->nights = $request->input('nights');
